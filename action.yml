@@ -1,13 +1,14 @@
-name: "Hello World"
-description: "Greet someone and record the time"
+name: "Thank you action"
+description: "Say 'Thank you' to new pull requests"
+
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
+  GITHUB_TOKEN:
+    description: "Github token"
     required: true
-    default: "World"
-outputs:
-  time: # id of output
-    description: "The time we greeted you"
+  TENOR_TOKEN:
+    description: "Tenor API token"
+    required: true
+
 runs:
-  using: "node16"
-  main: "index.js"
+  using: "node12"
+  main: "dist/index.js"

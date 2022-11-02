@@ -4,6 +4,7 @@
   "description": "Create Automatic PR Label and Update it on a specific timely basis",
   "main": "index.js",
   "scripts": {
+    "build":"ncc build src/action.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,7 +12,7 @@
     "url": "git+https://github.com/JayKim88/automatic-pr-labeler.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jay Kim",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/JayKim88/automatic-pr-labeler/issues"
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/JayKim88/automatic-pr-labeler#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1"
+    "@actions/github": "^5.1.1",
+    "@vercel/ncc": "^0.34.0"
   }
 }
