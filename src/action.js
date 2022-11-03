@@ -39,21 +39,6 @@ async function run() {
 
   if (!prIssuesNeedLabelUpdate) return;
 
-  // const prIssuesNeedLabelUpdate = [
-  //   {
-  //     number: 1,
-  //   },
-  //   {
-  //     number: 2,
-  //   },
-  //   {
-  //     number: 3,
-  //   },
-  //   {
-  //     number: 4,
-  //   },
-  // ];
-
   const updateDDayLabelStatus = async (v) => {
     console.log(v.number, v.labels);
     const prevDDayLabel = v.labels.filter((v) => v.name[0] === "D")[0]?.name;

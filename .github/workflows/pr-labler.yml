@@ -2,8 +2,9 @@ name: PR Labeler
 
 on:
   # test run this action at every 5 mins. would be changed to a specific time of a day like 9:00AM
+  # now, just one time works again after 5 mins of the previous pr created
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "00 9 * * 1,2,3,4,5"
       branches:
         - master
   pull_request:
