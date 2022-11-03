@@ -14,7 +14,7 @@ async function run() {
       repo: context.repo.repo,
     })
     .then((v) => v.data);
-
+  console.log("prList", prList);
   const prIssuesNeedLabelUpdate =
     prList.length && prList.filter((v) => !v.draft);
 
@@ -36,7 +36,7 @@ async function run() {
     });
     // return;
   }
-  
+
   if (!prIssuesNeedLabelUpdate) return;
 
   // const prIssuesNeedLabelUpdate = [
