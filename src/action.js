@@ -8,23 +8,37 @@ async function run() {
   const { context = {} } = github;
   const { pull_request } = context.payload;
 
-  console.log("PR list", context.repo.pull_request);
-
-  await octokit.request(
-    "POST /repos/{owner}/{repo}/issues/{issue_number}/labels",
-    {
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      issue_number: pull_request.number,
-      labels: ["D-5", "D-4"],
-    }
-  );
-
-  await octokit.rest.issues.createComment({
-    ...context.repo,
-    issue_number: pull_request.number,
-    body: "New Pull Request is waiting for you valuable Code-Review 🥰",
+  const prList = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+    owner: context.repo.owner,
+    repo: context.repo.repo,
   });
+
+  console.log("prListprListprList", prList);
+
+  if (!!pull_request.number) {
+    await octokit.request(
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/labels",
+      {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: pull_request.number,
+        labels: ["D-5", "D-4"],
+      }
+    );
+
+    await octokit.rest.issues.createComment({
+      ...context.repo,
+      issue_number: pull_request.number,
+      body: "New Pull Request is waiting for you valuable Code-Review 🥰",
+    });
+  } else {
+    console.log("This is Scheduled action");
+
+    const prList = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+      owner: context.repo.owner,
+      repo: "JayKim88/automatic-pr-labeler",
+    });
+  }
 }
 
 run();
