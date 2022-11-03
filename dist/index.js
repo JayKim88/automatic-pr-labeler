@@ -12926,6 +12926,9 @@ async function run() {
     });
     // return;
   }
+  
+  if (!prIssuesNeedLabelUpdate) return;
+
   // const prIssuesNeedLabelUpdate = [
   //   {
   //     number: 1,
@@ -12940,24 +12943,24 @@ async function run() {
   //     number: 4,
   //   },
   // ];
-  if (!prIssuesNeedLabelUpdate) return;
 
   const updateDDayLabelStatus = async (v) => {
-    console.log("vvvv", v.number);
-    // const prevDDayLabel = v.labels.filter((v) => v[0] === "D")[0];
-    // if (!prevDDayLabel) return;
-    // const newDDay = Number(prevDDayLabel.slice(-1)) - 1;
-    // const newDDayResult = newDDay >= 0 ? newDDay : 0;
-    // const newDDayLabel = "D-" + newDDayResult;
-    // await octokit.request(
-    //   "PUT /repos/{owner}/{repo}/issues/{issue_number}/labels",
-    //   {
-    //     owner: context.repo.owner,
-    //     repo: context.repo.repo,
-    //     issue_number: v.number,
-    //     labels: [newDDayLabel],
-    //   }
-    // );
+    console.log(v.number, v.labels);
+    const prevDDayLabel = v.labels.filter((v) => v[0] === "D")[0];
+    console.log(prevDDayLabel);
+    if (!prevDDayLabel) return;
+    const newDDay = Number(prevDDayLabel.slice(-1)) - 1;
+    const newDDayResult = newDDay >= 0 ? newDDay : 0;
+    const newDDayLabel = "D-" + newDDayResult;
+    await octokit.request(
+      "PUT /repos/{owner}/{repo}/issues/{issue_number}/labels",
+      {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: v.number,
+        labels: [newDDayLabel],
+      }
+    );
   };
 
   console.log("hello here is before for each");
