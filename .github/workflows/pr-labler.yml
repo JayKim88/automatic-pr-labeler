@@ -1,11 +1,10 @@
-name: Automatic Labeler for New PR
+name: PR Labeler
 
 on:
   # test run this action at every 5 mins. would be changed to a specific time of a day like 9:00AM
-  schedule: [{ cron: "*/5 * * * *" }]
+  schedule:
+    - cron: "*/5 * * * *"
   pull_request:
-    branches:
-      - staging
     types: [opened]
 
 jobs:
@@ -16,3 +15,4 @@ jobs:
       - uses: ./
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ref: master
