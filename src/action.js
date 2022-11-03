@@ -17,6 +17,16 @@ async function run() {
   //   description: "as soon as possible",
   // });
 
+  await octokit.request(
+    "POST /repos/{owner}/{repo}/issues/{issue_number}/labels",
+    {
+      owner: pull_request.repo.owner,
+      repo: pull_request.repo.repo,
+      issue_number: pull_request.number,
+      labels: ["bug", "enhancement"],
+    }
+  );
+
   await octokit.rest.issues.createComment({
     ...context.repo,
     issue_number: pull_request.number,
