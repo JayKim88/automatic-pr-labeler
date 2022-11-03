@@ -12898,14 +12898,14 @@ async function run() {
   const { context = {} } = github;
   const { pull_request } = context.payload;
 
-  await octokit.rest.issues.createLabel({
-    ...context.repo,
-    issue_number: pull_request.number,
-    owner: pull_request.owner,
-    name: "D-0",
-    color: "f29513",
-    description: "as soon as possible",
-  });
+  // await octokit.rest.issues.createLabel({
+  //   ...context.repo,
+  //   issue_number: pull_request.number,
+  //   owner: pull_request.owner,
+  //   name: "D-0",
+  //   color: "f29513",
+  //   description: "as soon as possible",
+  // });
 
   await octokit.rest.issues.createComment({
     ...context.repo,
