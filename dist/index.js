@@ -12946,8 +12946,8 @@ async function run() {
 
   const updateDDayLabelStatus = async (v) => {
     console.log(v.number, v.labels);
-    const prevDDayLabel = v.labels.filter((v) => v.name[0] === "D")[0].name;
-    console.log(prevDDayLabel);
+    const prevDDayLabel = v.labels.filter((v) => v.name[0] === "D")[0]?.name;
+    console.log("prevDDayLabel", prevDDayLabel);
     if (!prevDDayLabel) return;
     const newDDay = Number(prevDDayLabel.slice(-1)) - 1;
     const newDDayResult = newDDay >= 0 ? newDDay : 0;
@@ -12965,7 +12965,6 @@ async function run() {
 
   console.log("hello here is before for each");
   await prIssuesNeedLabelUpdate.forEach((v) => {
-    console.log("hello here is" + v.number);
     updateDDayLabelStatus(v);
   });
 }
