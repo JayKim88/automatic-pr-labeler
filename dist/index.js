@@ -12913,9 +12913,9 @@ async function run() {
 
   await octokit.rest.issues.createLabel({
     ...context.repo,
-    issue_number: pull_request.number,
+    owner: pull_request.owner,
     name: "D-0",
-    color: "red",
+    color: "f29513",
     description: "as soon as possible",
   });
 
