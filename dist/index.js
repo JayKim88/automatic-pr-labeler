@@ -12905,6 +12905,9 @@ async function run() {
     })
     .then((v) => v.data);
 
+  const prIssuesNeedLabelUpdate =
+    prList.length && prList.filter((v) => !v.draft);
+
   if (!!pull_request?.number) {
     await octokit.request(
       "POST /repos/{owner}/{repo}/issues/{issue_number}/labels",
@@ -12938,11 +12941,6 @@ async function run() {
   //   },
   // ];
   if (!prIssuesNeedLabelUpdate) return;
-
-  // const checkedPrIssues = prIssuesNeedLabelUpdate.map(v => ({
-  //   issueNumber: v.number
-  //   lastLabels: v.labels
-  // }))
 
   const updateDDayLabelStatus = async (v) => {
     console.log("vvvv", v.number);
