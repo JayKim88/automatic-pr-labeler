@@ -12891,19 +12891,6 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
-// try {
-//   // `who-to-greet` input defined in action metadata file
-//   const nameToGreet = core.getInput("who-to-greet");
-//   console.log(`Hello ${nameToGreet}!`);
-//   const time = new Date().toTimeString();
-//   core.setOutput("time", time);
-//   // Get the JSON webhook payload for the event that triggered the workflow
-//   const payload = JSON.stringify(github.context.payload, undefined, 2);
-//   console.log(`The event payload: ${payload}`);
-// } catch (error) {
-//   core.setFailed(error.message);
-// }
-
 async function run() {
   const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
   const octokit = github.getOctokit(GITHUB_TOKEN);
@@ -12913,6 +12900,7 @@ async function run() {
 
   await octokit.rest.issues.createLabel({
     ...context.repo,
+    issue_number: pull_request.number,
     owner: pull_request.owner,
     name: "D-0",
     color: "f29513",
