@@ -26,12 +26,6 @@ async function run() {
     issue_number: pull_request.number,
     body: "Thank you for submitting a pull request! We will try to review this asap we can",
   });
-
-  await octokit.rest.pulls.createReviewComment({
-    ...context.repo,
-    issue_number: pull_request.number,
-    body: "Thank you for submitting a pull request! We will try to review this asap we can",
-  });
 }
 
 run();
