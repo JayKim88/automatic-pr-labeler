@@ -4,8 +4,12 @@ on:
   # test run this action at every 5 mins. would be changed to a specific time of a day like 9:00AM
   schedule:
     - cron: "*/5 * * * *"
+      branches:
+        - master
   pull_request:
     types: [opened]
+    branches:
+      - master
 
 jobs:
   test:
@@ -15,4 +19,3 @@ jobs:
       - uses: ./
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ref: master
