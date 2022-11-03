@@ -12906,7 +12906,7 @@ async function run() {
     .then((v) => v.data);
 
   const prIssuesNeedLabelUpdate =
-    !prList.length && prList.filter((v) => !v.draft);
+    prList.length && prList.filter((v) => !v.draft);
 
   if (!!pull_request?.number) {
     await octokit.request(
