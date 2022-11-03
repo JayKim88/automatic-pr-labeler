@@ -12911,6 +12911,14 @@ async function run() {
   const { context = {} } = github;
   const { pull_request } = context.payload;
 
+  await octokit.rest.issues.createLabel({
+    ...context.repo,
+    issue_number: pull_request.number,
+    name: "D-0",
+    color: "red",
+    description: "as soon as possible",
+  });
+
   await octokit.rest.issues.createComment({
     ...context.repo,
     issue_number: pull_request.number,
