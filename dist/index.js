@@ -12898,30 +12898,22 @@ async function run() {
   const { context = {} } = github;
   const { pull_request } = context.payload;
 
-  // await octokit.rest.issues.createLabel({
-  //   ...context.repo,
-  //   issue_number: pull_request.number,
-  //   owner: pull_request.owner,
-  //   name: "D-0",
-  //   color: "f29513",
-  //   description: "as soon as possible",
-  // });
+  console.log("PR list", context.repo.pull_request);
 
-  context.repo.owner;
   await octokit.request(
     "POST /repos/{owner}/{repo}/issues/{issue_number}/labels",
     {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: pull_request.number,
-      labels: ["bug", "enhancement"],
+      labels: ["D-5", "D-4"],
     }
   );
 
   await octokit.rest.issues.createComment({
     ...context.repo,
     issue_number: pull_request.number,
-    body: "Thank you for submitting a pull request! We will try to review this asap we can",
+    body: "New Pull Request is waiting for you valuable Code-Review 🥰",
   });
 }
 
