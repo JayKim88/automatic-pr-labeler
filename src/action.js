@@ -56,7 +56,7 @@ async function run() {
 
   const updateDDayLabelStatus = async (v) => {
     console.log(v.number, v.labels);
-    const prevDDayLabel = v.labels.filter((v) => v[0] === "D")[0];
+    const prevDDayLabel = v.labels.filter((v) => v.name[0] === "D")[0].name;
     console.log(prevDDayLabel);
     if (!prevDDayLabel) return;
     const newDDay = Number(prevDDayLabel.slice(-1)) - 1;
