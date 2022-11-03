@@ -12933,14 +12933,14 @@ async function run() {
   //   lastLabels: v.labels
   // }))
 
-  console.log("prListprListprList", prIssuesNeedLabelUpdate);
-
   const updateDDayLabelStatus = async (v) => {
     const prevDDayLabel = v.labels.filter((v) => v[0] === "D")[0];
     if (!prevDDayLabel) return;
     const newDDay = Number(prevDDayLabel.slice(-1)) - 1;
     const newDDayResult = newDDay >= 0 ? newDDay : 0;
     const newDDayLabel = "D-" + newDDayResult;
+
+    console.log("hello here is" + v.number);
 
     await octokit.request(
       "PUT /repos/{owner}/{repo}/issues/{issue_number}/labels",
@@ -12953,6 +12953,7 @@ async function run() {
     );
   };
 
+  console.log("hello here is before for each");
   await prIssuesNeedLabelUpdate.forEach((v) => updateDDayLabelStatus(v));
 }
 
