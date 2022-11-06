@@ -39,14 +39,17 @@ async function runAutomaticLabeler() {
 
   const updateDDayLabelStatus = async (v) => {
     const prevDDayLabels = v.labels.filter((v) => v.name[0] === "D");
-    const minDay = Math.min(prevDDayLabels.map((v) => Number(v.slice(-1))));
+    console.log("prevDDayLabels?", prevDDayLabels);
+    const minDay = Math.min(
+      prevDDayLabels.map((v) => Number(v.name.slice(-1)))
+    );
 
     const dDayLabelToUpdate = prevDDayLabels.filter(
-      (v) => Number(v.slice(-1)) === minDay
+      (v) => Number(v.name.slice(-1)) === minDay
     )[0];
 
     if (!dDayLabelToUpdate) return;
-    const newDDay = Number(dDayLabelToUpdate.slice(-1)) - 1;
+    const newDDay = Number(dDayLabelToUpdate.name.slice(-1)) - 1;
     const newDDayResult = newDDay >= 0 ? newDDay : 0;
     const newDDayLabel = "D-" + newDDayResult;
     await octokit.request(
