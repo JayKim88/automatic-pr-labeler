@@ -6,7 +6,7 @@ async function runAutomaticLabeler() {
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const { context = {} } = github;
   const { pull_request } = context.payload;
-
+  console.log("pull_request?.number", pull_request?.number);
   if (!!pull_request?.number) {
     const prevLabels = pull_request.labels.map((v) => v.name);
     const isDDayLabelExist = prevLabels.find((v) => v[0] === "D");
@@ -30,6 +30,7 @@ async function runAutomaticLabeler() {
       repo: context.repo.repo,
     })
     .then((v) => v.data);
+  console.log("prList", prList);
 
   const prIssuesNeedLabelUpdate = prList.filter((v) => !v.draft);
 
