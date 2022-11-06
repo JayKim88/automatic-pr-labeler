@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-async function run() {
+async function runAutomaticLabeler() {
   const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
   const octokit = github.getOctokit(GITHUB_TOKEN);
 
@@ -22,7 +22,7 @@ async function run() {
         labels: ["D-5"],
       }
     );
-    return;
+    // return;
   }
 
   const prList = await octokit
@@ -65,4 +65,4 @@ async function run() {
   });
 }
 
-run();
+runAutomaticLabeler();
