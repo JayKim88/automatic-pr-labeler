@@ -39,11 +39,11 @@ async function runAutomaticLabeler() {
   const updateDDayLabelStatus = async (v) => {
     const prevLabels = v.labels.map((v) => v.name);
     const prevDDayLabels = prevLabels.filter((v) => v[0] === "D");
+    if (!prevDDayLabels.length) return;
     const minDay = Math.min(...prevDDayLabels.map((v) => Number(v.slice(-1))));
     const shortestDDayLabel = prevDDayLabels.find(
       (v) => Number(v.slice(-1)) === minDay
     );
-    if (!shortestDDayLabel) return;
     const labelsExceptDDay = prevLabels.filter((v) => v[0] !== "D");
 
     const newDDay = Number(shortestDDayLabel.slice(-1)) - 1;
