@@ -31,10 +31,9 @@ async function runAutomaticLabeler() {
     })
     .then((v) => v.data);
 
-  const prIssuesNeedLabelUpdate =
-    prList.length && prList.filter((v) => !v.draft);
+  const prIssuesNeedLabelUpdate = prList.filter((v) => !v.draft);
 
-  if (!prIssuesNeedLabelUpdate) return;
+  if (!prIssuesNeedLabelUpdate.length) return;
 
   const updateDDayLabelStatus = async (v) => {
     const prevLabels = v.labels.map((v) => v.name);
