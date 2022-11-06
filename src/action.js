@@ -4,7 +4,6 @@ const github = require("@actions/github");
 async function runAutomaticLabeler() {
   const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
   const octokit = github.getOctokit(GITHUB_TOKEN);
-
   const { context = {} } = github;
   const { pull_request } = context.payload;
 
@@ -39,17 +38,14 @@ async function runAutomaticLabeler() {
 
   const updateDDayLabelStatus = async (v) => {
     const prevDDayLabels = v.labels.filter((v) => v.name[0] === "D");
-    console.log("prevDDayLabels?", prevDDayLabels);
     const minDay = Math.min(
-      prevDDayLabels.map((v) => Number(v.name.slice(-1)))
+      ...prevDDayLabels.map((v) => Number(v.name.slice(-1)))
     );
-
-    const dDayLabelToUpdate = prevDDayLabels.filter(
+    const shortestDDayLabel = prevDDayLabels.find(
       (v) => Number(v.name.slice(-1)) === minDay
-    )[0];
-
-    if (!dDayLabelToUpdate) return;
-    const newDDay = Number(dDayLabelToUpdate.name.slice(-1)) - 1;
+    );
+    if (!shortestDDayLabel) return;
+    const newDDay = Number(shortestDDayLabel.name.slice(-1)) - 1;
     const newDDayResult = newDDay >= 0 ? newDDay : 0;
     const newDDayLabel = "D-" + newDDayResult;
     await octokit.request(
