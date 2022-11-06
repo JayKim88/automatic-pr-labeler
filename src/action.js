@@ -25,6 +25,8 @@ async function run() {
     return;
   }
 
+  console.log("check here");
+
   const prList = await octokit
     .request("GET /repos/{owner}/{repo}/pulls", {
       owner: context.repo.owner,
