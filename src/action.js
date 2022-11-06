@@ -8,43 +8,45 @@ async function run() {
   const { context = {} } = github;
   const { pull_request } = context.payload;
 
-  const prList = await octokit
-    .request("GET /repos/{owner}/{repo}/pulls", {
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-    })
-    .then((v) => v.data);
-  console.log("prList", prList);
-  const prIssuesNeedLabelUpdate =
-    prList.length && prList.filter((v) => !v.draft);
-
   if (!!pull_request?.number) {
+    // pr label 중 D로 시작하는 라벨이 존재하면, 안 만든다.
+    // 존재하지 않으면, D-5 로 만들어 준다.
+    const isDDayLabelExist = pull_request.labels.find((v) => v.name[0] === "D");
+    if (isDDayLabelExist) return;
     await octokit.request(
       "POST /repos/{owner}/{repo}/issues/{issue_number}/labels",
       {
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        labels: ["D-5", "D-4"],
+        labels: ["D-5"],
       }
     );
-
-    await octokit.rest.issues.createComment({
-      ...context.repo,
-      issue_number: pull_request.number,
-      body: "New Pull Request is waiting for you valuable Code-Review 🥰",
-    });
-    // return;
+    return;
   }
+
+  const prList = await octokit
+    .request("GET /repos/{owner}/{repo}/pulls", {
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+    })
+    .then((v) => v.data);
+
+  const prIssuesNeedLabelUpdate =
+    prList.length && prList.filter((v) => !v.draft);
 
   if (!prIssuesNeedLabelUpdate) return;
 
   const updateDDayLabelStatus = async (v) => {
-    console.log(v.number, v.labels);
-    const prevDDayLabel = v.labels.filter((v) => v.name[0] === "D")[0]?.name;
-    console.log("prevDDayLabel", prevDDayLabel);
-    if (!prevDDayLabel) return;
-    const newDDay = Number(prevDDayLabel.slice(-1)) - 1;
+    const prevDDayLabels = v.labels.filter((v) => v.name[0] === "D");
+    const minDay = Math.min(prevDDayLabels.map((v) => Number(v.slice(-1))));
+
+    const dDayLabelToUpdate = prevDDayLabels.filter(
+      (v) => Number(v.slice(-1)) === minDay
+    )[0];
+
+    if (!dDayLabelToUpdate) return;
+    const newDDay = Number(dDayLabelToUpdate.slice(-1)) - 1;
     const newDDayResult = newDDay >= 0 ? newDDay : 0;
     const newDDayLabel = "D-" + newDDayResult;
     await octokit.request(
@@ -58,7 +60,6 @@ async function run() {
     );
   };
 
-  console.log("hello here is before for each");
   await prIssuesNeedLabelUpdate.forEach((v) => {
     updateDDayLabelStatus(v);
   });
