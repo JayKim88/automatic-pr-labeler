@@ -35,7 +35,7 @@ async function runAutomaticLabeler() {
     prList.length && prList.filter((v) => !v.draft);
 
   if (!prIssuesNeedLabelUpdate) return;
-
+  console.log("prIssuesNeedLabelUpdate", prIssuesNeedLabelUpdate);
   const updateDDayLabelStatus = async (v) => {
     const prevLabels = v.labels.map((v) => v.name);
     const prevDDayLabels = prevLabels.filter((v) => v[0] === "D");
@@ -45,7 +45,7 @@ async function runAutomaticLabeler() {
     const shortestDDayLabel = prevDDayLabels.find(
       (v) => Number(v.name.slice(-1)) === minDay
     );
-
+    console.log("shortestDDayLabel", shortestDDayLabel);
     if (!shortestDDayLabel) return;
     const labelsExceptDDay = prevLabels.filter((v) => v[0] !== "D");
 
