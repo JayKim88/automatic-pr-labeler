@@ -1,8 +1,9 @@
+# UTC is 9 hours behind Seoul. It is set to run at 3PM from Sunday to Thursday considering Time Difference
+# @todo: This will be improved for global users
 name: PR Labeler
 on:
   schedule:
-    - cron: "*/15 * * * *"
-    - cron: "00 15 * * 0,1,2,3,4"
+    - cron: "00 15 * * 0-4"
       branches:
         - master
   pull_request:
@@ -15,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
       - uses: ./
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# UTC is 9 hours behind Seoul. It is set to run at 3PM from Sunday to Thursday considering Time Difference
-# @todo: This will be improved for global users
+          node-version: "16"
