@@ -1,5 +1,5 @@
 # UTC is 9 hours behind Seoul. It is set to run at 3PM from Sunday to Thursday considering Time Difference
-# @todo: This will be improved for global users
+# This file is for Testing purpose
 name: PR Labeler
 on:
   schedule:

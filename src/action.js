@@ -1,13 +1,12 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-async function runAutomaticLabeler() {
+async function runAutomaticPRLabeler() {
   const GITHUB_TOKEN = core.getInput("token");
-  console.log("GITHUB_TOKEN", GITHUB_TOKEN);
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const { context = {} } = github;
   const { pull_request } = context.payload;
-  console.log("pull_request?.number", pull_request?.number);
+
   if (!!pull_request?.number) {
     const prevLabels = pull_request.labels.map((v) => v.name);
     const isDDayLabelExist = prevLabels.find((v) => v[0] === "D");
@@ -41,7 +40,7 @@ async function runAutomaticLabeler() {
     const prevDDayLabels = prevLabels.filter((v) => v[0] === "D");
 
     if (!prevDDayLabels.length) return;
-    console.log("prevDDayLabels", prevDDayLabels);
+
     const labelsExceptDDay = prevLabels.filter((v) => v[0] !== "D");
     const minDay = Math.min(...prevDDayLabels.map((v) => Number(v.slice(-1))));
     const shortestDDayLabel = prevDDayLabels.find(
@@ -61,10 +60,10 @@ async function runAutomaticLabeler() {
       }
     );
   };
-  console.log("prIssuesNeedLabelUpdate", prIssuesNeedLabelUpdate);
+
   await prIssuesNeedLabelUpdate.forEach((v) => {
     updateDDayLabelStatus(v);
   });
 }
 
-runAutomaticLabeler();
+runAutomaticPRLabeler();
