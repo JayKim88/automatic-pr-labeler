@@ -1,22 +1,5 @@
-# UTC is 9 hours behind Seoul. It is set to run at 3PM from Sunday to Thursday considering Time Difference
-# @todo: This will be improved for global users
-name: PR Labeler
-on:
-  schedule:
-    - cron: "00 15 * * 0-4"
-      branches:
-        - master
-  pull_request:
-    types: [opened]
-    branches:
-      - master
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - uses: ./
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          node-version: "16"
+name: Automatic PR Labeler
+author: JayKim88
+runs:
+  using: node16
+  main: dist/index.js
