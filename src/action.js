@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 async function runAutomaticLabeler() {
-  const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
+  const GITHUB_TOKEN = core.getInput("token");
   console.log("GITHUB_TOKEN", GITHUB_TOKEN);
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const { context = {} } = github;

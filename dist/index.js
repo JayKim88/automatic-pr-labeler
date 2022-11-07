@@ -12892,7 +12892,7 @@ const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
 async function runAutomaticLabeler() {
-  const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
+  const GITHUB_TOKEN = core.getInput("token");
   console.log("GITHUB_TOKEN", GITHUB_TOKEN);
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const { context = {} } = github;
