@@ -12930,7 +12930,7 @@ async function runAutomaticLabeler() {
     const prevDDayLabels = prevLabels.filter((v) => v[0] === "D");
 
     if (!prevDDayLabels.length) return;
-
+    console.log("prevDDayLabels", prevDDayLabels);
     const labelsExceptDDay = prevLabels.filter((v) => v[0] !== "D");
     const minDay = Math.min(...prevDDayLabels.map((v) => Number(v.slice(-1))));
     const shortestDDayLabel = prevDDayLabels.find(
@@ -12950,7 +12950,7 @@ async function runAutomaticLabeler() {
       }
     );
   };
-
+  console.log("prIssuesNeedLabelUpdate", prIssuesNeedLabelUpdate);
   await prIssuesNeedLabelUpdate.forEach((v) => {
     updateDDayLabelStatus(v);
   });
