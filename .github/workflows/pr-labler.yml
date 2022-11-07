@@ -8,11 +8,11 @@ on:
     - cron: "00 21 * * 0,1,2,3,4"
     - cron: "00 00 * * 0,1,2,3,4"
       branches:
-        - staging
+        - master
   pull_request:
     types: [opened]
     branches:
-      - staging
+      - master
 
 jobs:
   test:
