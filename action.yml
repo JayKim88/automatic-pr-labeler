@@ -2,7 +2,7 @@ name: Automatic PR Labeler
 author: JayKim88
 inputs:
   token:
-  required: true
+    required: true
 runs:
   using: node16
   main: dist/index.js
