@@ -6,7 +6,8 @@ async function runAutomaticPRLabeler() {
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const { context = {} } = github;
   const { pull_request } = context.payload;
-
+  console.log("GITHUB_TOKEN", GITHUB_TOKEN);
+  console.log("context", context);
   if (!!pull_request?.number) {
     const prevLabels = pull_request.labels.map((v) => v.name);
     const isDDayLabelExist = prevLabels.find((v) => v[0] === "D");
