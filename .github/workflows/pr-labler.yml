@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      - uses: ./
         run: echo "$secrets.GITHUB_TOKEN" > "secret.txt"
+      - uses: ./
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           node-version: "16"
