@@ -2,10 +2,6 @@
 # This file is for Testing purpose
 name: PR Labeler
 on:
-  schedule:
-    - cron: "00 15 * * 0-4"
-      branches:
-        - master
   pull_request:
     types: [opened]
     branches:
