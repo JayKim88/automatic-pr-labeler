@@ -18,7 +18,7 @@ async function runAutomaticPRLabeler() {
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        labels: ["D-5", ...prevLabels],
+        labels: ["D-2", ...prevLabels],
       }
     );
     return;
